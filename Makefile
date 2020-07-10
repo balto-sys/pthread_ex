@@ -1,3 +1,6 @@
+jacobi: jacobi.c
+	gcc -Wall -pthread -o jacobi jacobi.c -lm
+
 ex1: ex1.c
 	gcc -Wall -pthread -o ex1 ex1.c
 
