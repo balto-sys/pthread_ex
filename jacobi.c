@@ -19,8 +19,9 @@
 #include <stdint.h>     // uint32_t and friends
 #include <inttypes.h>   // PRIu32 and friends
 #include <stdio.h>      // printf and friends
+#include <sys/time.h>   // gettimeofday()
 
-#define N (10ULL)
+#define N (2000ULL)
 #define NUMGRIDS (2ULL) 
 double grid[NUMGRIDS][N][N];
 
@@ -170,22 +171,34 @@ double calculate_delta(){
 
 int main(){
     double target_delta=0.05, delta;
+    uint32_t count=0;
+    struct timeval start, stop;
 
+    gettimeofday( &start, NULL );
     initialize_grid();
-    while(1){ // Still not my best work...
-        calculate_avg(0,1);
-        delta = calculate_delta();
-        if( delta < target_delta ){
-            break;
+    gettimeofday( &stop, NULL );
+    fprintf(stdout, "Initialization time:  %lf\n", 
+            (stop.tv_sec - start.tv_sec) + (stop.tv_usec - start.tv_usec)/1000000.0 );
+
+    gettimeofday( &start, NULL );
+    while(1){
+        count++;
+        if( count%2 ){
+            calculate_avg(!count,!!count);
+        }else{
+            calculate_avg(!!count,!count);
         }
 
-        calculate_avg(1,0);
         delta = calculate_delta();
+
         if( delta < target_delta ){
             break;
         }
     }
-    print_grid(0);
+    gettimeofday( &stop, NULL );
+    fprintf(stdout, "Calculation time:  %lf\n", 
+            (stop.tv_sec - start.tv_sec) - (stop.tv_usec - start.tv_usec)/1000000.0 );
+    //print_grid(0);
 }
 
 

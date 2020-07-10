@@ -14,11 +14,23 @@ pthread_mutex_t mutex;
 void *PrintHello(void *threadid)
 {
     uint64_t i;
+    /*
     for( i=0; i<BUFLEN; i++ ){
         pthread_mutex_lock( &mutex );
         globalbuf[i]++;
         pthread_mutex_unlock( &mutex );
     }
+    */
+    // 8192/5 = 1638
+
+    if( (uint64_t)(*threadid) == 0 ){
+        for( i=0; i<1638; i++ ){
+            globalbuf[i]++;
+        }
+    }else if( (uint64_t)(*threadid) == 0 ){
+        ...
+    }
+
     pthread_exit(NULL);
  }
 
