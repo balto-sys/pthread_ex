@@ -177,7 +177,7 @@ int main(){
     gettimeofday( &start, NULL );
     initialize_grid();
     gettimeofday( &stop, NULL );
-    fprintf(stdout, "Initialization time:  %lf\n", 
+    fprintf(stdout, "%lf ", 
             (stop.tv_sec - start.tv_sec) + (stop.tv_usec - start.tv_usec)/1000000.0 );
 
     gettimeofday( &start, NULL );
@@ -196,7 +196,7 @@ int main(){
         }
     }
     gettimeofday( &stop, NULL );
-    fprintf(stdout, "Calculation time:  %lf\n", 
+    fprintf(stdout, "%lf ", 
             (stop.tv_sec - start.tv_sec) - (stop.tv_usec - start.tv_usec)/1000000.0 );
     //print_grid(0);
 }
